@@ -1,4 +1,14 @@
-print("Bienvenido a la calculadora\n")
+import customtkinter as ctk
+
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
+
+app = ctk.CTk()
+app.geometry("320x350")
+app.title("Calculadora")
+
+# ... widgets con ctk.CTkEntry, ctk.CTkButton, etc.
+
 
 def Opciones():
     print("OPCIONES\n")
