@@ -1,155 +1,61 @@
-import customtkinter as ctk
+import tkinter as tk
+from tkinter import messagebox
 
-ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("blue")
-
-app = ctk.CTk()
-app.geometry("320x350")
-app.title("Calculadora")
-
-# ... widgets con ctk.CTkEntry, ctk.CTkButton, etc.
-
-
-def Opciones():
-    print("OPCIONES\n")
-    print("0. Salir")
-    print("1. Suma")
-    print("2. Resta")
-    print("3. Multiplicacion")
-    print("4. Division")
-    print("5. Potencia")
-    print("6. Modulo")
-
-def Numeros():
-    try: 
-        a = float(input("Ingrese el primero numero: "))
-        b = float(input("Ingrese el segundo numero: "))
-        return a, b
+def calcular():
+    try:
+        a = float(entry_a.get())
+        b = float(entry_b.get())
+        op = operacion.get()
+        
+        if op == "+": r = a + b
+        elif op == "-": r = a - b
+        elif op == "*": r = a * b
+        elif op == "/": 
+            if b == 0: raise ZeroDivisionError
+            r = a / b
+        elif op == "%": 
+            if b == 0: raise ZeroDivisionError
+            r = a % b
+        elif op == "**": r = a ** b
+        else: raise ValueError("Operación no válida")
+        
+        label_resultado.config(text=f"Resultado: {r}")
     except ValueError:
-        print("Por favor, ingrese numeros")
-        return None,None
-
-def Suma():
-    a, b = Numeros()
-    if a is not None and b is not None:
-        resultado = a + b
-        print("El resultado de la suma es: ", resultado)
-
-    while True:
-                print("¿Desea encadenar la operacio1n? (s/n)")
-                if input().lower() == "s":
-                    a = resultado
-                    b = float(input("Ingrese el segundo numero: "))
-                    resultado = a + b
-                    print("\nEl resultado de la suma es: ", resultado)
-                else:
-                    break
-
-def Resta():
-    a, b = Numeros()
-    if a is not None and b is not None:
-        resultado = a - b
-        print("El resultado de la resta es: ", resultado)
-
-    while True:
-                print("¿Desea encadenar la operacio1n? (s/n)")
-                if input().lower() == "s":
-                    a = resultado
-                    b = float(input("Ingrese el segundo numero: "))
-                    resultado = a - b
-                    print("\nEl resultado de la resta es: ", resultado)
-                else:
-                    break
-
-def Multiplicacion():
-    a, b = Numeros()
-    if a is not None and b is not None:
-        resultado = a * b
-        print("El resultado de la multiplicacion es: ", resultado)
-
-    while True:
-                print("¿Desea encadenar la operacio1n? (s/n)")
-                if input().lower() == "s":
-                    a = resultado
-                    b = float(input("Ingrese el segundo numero: "))
-                    resultado = a * b
-                    print("\nEl resultado de la multiplicacion es: ", resultado)
-                else:
-                    break
-
-def Division():
-    a, b = Numeros()
-    if a is not None and b is not None:
-        if b == 0:
-            print("No se puede dividir entre cero")
-        else:
-            resultado = a / b
-            print("El resultado de la division es: ", resultado)
-
-        while True:
-                    print("¿Desea encadenar la operacio1n? (s/n)")
-                    if input().lower() == "s":
-                        a = resultado
-                        b = float(input("Ingrese el segundo numero: "))
-                        resultado = a / b
-                        print("\nEl resultado de la division es: ", resultado)
-                    else:
-                        break
-
-def Potencia():
-    a, b = Numeros()
-    if a is not None and b is not None:
-        resultado = a ** b
-        print("El resultado de la potencia es: ", resultado)
-
-    while True:
-                print("¿Desea encadenar la operacio1n? (s/n)")
-                if input().lower() == "s":
-                    a = resultado
-                    b = float(input("Ingrese el segundo numero: "))
-                    resultado = a ** b
-                    print("\nEl resultado de la potencia es: ", resultado)
-                else:
-                    break
-
-def Modulo():
-    a, b = Numeros()
-    if a is not None and b is not None:
-        resultado = a % b
-        print("El resultado del modulo es: ", resultado)
-
-    while True:
-        print("¿Desea encadenar la operacio1n? (s/n)")
-        if input().lower() == "s":
-            a = resultado
-            b = float(input("Ingrese el segundo numero: "))
-            resultado = a % b
-            print("\nEl resultado del modulo es: ", resultado)
-        else:
-            break
+        messagebox.showerror("Error", "Ingrese números válidos")
+    except ZeroDivisionError:
+        messagebox.showerror("Error", "No se puede dividir entre cero")
 
 
 
-while True:
-    Opciones()
-    opcion = input("\nIngrese la opcion deseada: ")
-    if opcion == "0":
-        print("Gracias por usar la calculadora")
-        break;
-    if opcion == "1":
-        Suma()
-    elif opcion == "2":
-        Resta()
-    elif opcion == "3":
-        Multiplicacion()
-    elif opcion == "4":
-        Division()
-    elif opcion == "5":
-        Potencia()
-    elif opcion == "6":
-        Modulo()
-    else:
-        print("Opcion no valida, por favor ingrese una opcion correcta")
+ventana = tk.Tk()
+ventana.title("Calculadora")
+ventana.geometry("500x400")
+
+
+
+tk.Label(ventana, text="Primer número:").pack()
+entry_a = tk.Entry(ventana)
+entry_a.pack()
+
+tk.Label(ventana, text="Segundo número:").pack()
+entry_b = tk.Entry(ventana)
+entry_b.pack()
+
+tk.Label(ventana, text="Presione para desplegar: ").pack()
+operacion = tk.StringVar(value="+")
+tk.OptionMenu(ventana, operacion, "+", "-", "*", "/", "%", "**").pack()
+
+
+tk.Button(ventana, text="Calcular", command=calcular).pack(pady=20)
+
+
+
+label_resultado = tk.Label(ventana, text="Resultado: ", font=("Arial", 20, "bold"))
+label_resultado.pack(pady=10)
+
+
+
+ventana.mainloop()
 
 
 
