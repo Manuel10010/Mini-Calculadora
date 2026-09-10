@@ -48,8 +48,10 @@ def usar_anterior():
 
 ventana = tk.Tk()
 ventana.title("Calculadora")
-ventana.geometry("500x400")
+ventana.geometry("1080x800")
 ventana.configure(bg="lightblue")
+
+imagen = tk.PhotoImage(file="carita_feliz.png", width=360, height=361)
 
 
 
@@ -79,8 +81,11 @@ tk.Button(ventana, text="Calcular", command=calcular, bg="lightblue").pack(pady=
 label_resultado = tk.Label(ventana, text="Resultado: ", font=("Arial", 20, "bold"), bg="lightgreen")
 label_resultado.pack(pady=10)
 
+label_imagen = tk.Label(ventana, image=imagen)
+label_imagen.pack(pady=10)
 
 
+label_imagen.image = imagen
 ventana.mainloop()
 
 
